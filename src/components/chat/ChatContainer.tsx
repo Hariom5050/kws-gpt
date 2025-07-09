@@ -61,7 +61,7 @@ export const ChatContainer = () => {
       <div className="border-b border-border p-4 bg-background">
         <div className="flex items-center gap-2 justify-center">
           <Sparkles className="w-6 h-6 text-primary" />
-          <h1 className="text-xl font-semibold text-foreground">Gemini</h1>
+          <h1 className="text-xl font-semibold text-foreground">KWS GPT</h1>
         </div>
       </div>
 
@@ -72,7 +72,7 @@ export const ChatContainer = () => {
             <div className="text-center max-w-md mx-auto p-8">
               <Sparkles className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
               <h2 className="text-2xl font-semibold text-foreground mb-2">
-                Hello, I'm Gemini
+                Hello, I'm KWS GPT
               </h2>
               <p className="text-muted-foreground">
                 How can I help you today?

@@ -35,7 +35,7 @@ export const ChatInput = ({ onSendMessage, isLoading }: ChatInputProps) => {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Message Gemini..."
+            placeholder="Message KWS GPT..."
             className={cn(
               "min-h-[44px] max-h-32 resize-none border-border",
               "focus:ring-1 focus:ring-ring",
