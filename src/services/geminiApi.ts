@@ -1,5 +1,5 @@
-const GEMINI_API_KEY = "AIzaSyBQFUkCVZa-DEGYHi7XplskEpsscJ-O28Q";
-const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent";
+const GEMINI_API_KEY = "AIzaSyAHrjjFPtzRJPShqaXuwub446VgREPOds8";
+const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-exp:generateContent";
 
 export interface ChatMessage {
   id: string;
@@ -8,21 +8,47 @@ export interface ChatMessage {
   timestamp: Date;
 }
 
-export const sendMessageToGemini = async (message: string): Promise<string> => {
+export const sendMessageToGemini = async (message: string, conversationHistory: ChatMessage[] = []): Promise<string> => {
   try {
+    // System prompt for global citizenship focus
+    const systemPrompt = "You are KWS GPT, an AI assistant focused on global citizenship. Your responses should emphasize digital responsibility, cultural unity, climate change awareness, and sustainable practices. Help users understand how they can be responsible global citizens in our interconnected world. Promote environmental consciousness, cultural understanding, ethical technology use, and collaborative solutions to global challenges.";
+    
+    // Build conversation contents with history
+    const contents = [];
+    
+    // Add system message
+    contents.push({
+      role: "user",
+      parts: [{ text: systemPrompt }]
+    });
+    contents.push({
+      role: "model", 
+      parts: [{ text: "I understand. I'm KWS GPT, and I'll focus on global citizenship topics including digital responsibility, cultural unity, and climate change. How can I help you become a more responsible global citizen today?" }]
+    });
+    
+    // Add conversation history
+    conversationHistory.forEach((msg) => {
+      contents.push({
+        role: msg.role === 'user' ? 'user' : 'model',
+        parts: [{ text: msg.content }]
+      });
+    });
+    
+    // Add current message
+    contents.push({
+      role: "user",
+      parts: [{ text: message }]
+    });
+
     const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: message
-          }]
-        }],
+        contents,
         generationConfig: {
-          temperature: 0.7,
+          temperature: 0.8,
           topK: 40,
           topP: 0.95,
           maxOutputTokens: 8192,

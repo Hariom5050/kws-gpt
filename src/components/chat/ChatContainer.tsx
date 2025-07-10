@@ -33,7 +33,7 @@ export const ChatContainer = () => {
     setIsLoading(true);
 
     try {
-      const response = await sendMessageToGemini(content);
+      const response = await sendMessageToGemini(content, messages);
       
       const assistantMessage: ChatMessageType = {
         id: (Date.now() + 1).toString(),
